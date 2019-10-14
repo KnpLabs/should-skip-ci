@@ -1,19 +1,10 @@
-use std::path::PathBuf;
-use structopt::StructOpt;
+mod cli;
 
-#[derive(StructOpt)]
-#[structopt(name = "ssc", about = "should-skip-ci")]
-struct Opt {
-    #[structopt(short = "c", long = "config", help = "Config file (YAML).")]
-    config_file: PathBuf,
-
-    #[structopt(help = "The app name for which this CI job is for.")]
-    app_name: String,
-}
+use cli::Cli;
 
 fn main() {
-    let opt = Opt::from_args();
+    let cli: Cli = Cli::new();
 
-    println!("Config file is {:?}.", opt.config_file.to_str().unwrap());
-    println!("App name is {:?}.", opt.app_name);
+    println!("Config file is {:?}.", cli.config_file().to_str().unwrap());
+    println!("App name is {:?}.", cli.app_name());
 }

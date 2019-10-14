@@ -3,7 +3,9 @@ version: '3.7'
 
 services:
   app:
-    image: rust:1.38.0-alpine3.10
+    image: rust:1.38.0-buster
+    environment:
+      - CARGO_HOME=/app/.cargo
     user: "1000"
     working_dir: /app
     volumes:

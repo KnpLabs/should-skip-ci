@@ -100,7 +100,7 @@ $ ssh -c ssh.yml
 Detailed usage :
 
 ```bash
-Usage: ssc -c CONFIG_FILE APP_NAME [PATH]
+Usage: ssc -c CONFIG_FILE APP_NAME
 Skips the CI build of the specified APP_NAME if the changes of this build
 aren't impacting this app.
 
@@ -109,12 +109,9 @@ Mandatory arguments :
 -c --config[=CONFIG_FILE]   The config file to use (yaml).
 APP_NAME                    The app (defined in the config file) for which the
                             current CI build is for.
-
-Optional arguments :
-
-PATH                        The path on which the source code of the project is
-                            fetched (defaults to current working dir).
 ```
+
+The tool should be ran in a directory which is inside a git repository.
 
 As the tool will run the command to stop the current build, it should be
 exdcuted by the CI executor itself.

@@ -8,7 +8,7 @@ pub struct CommitsRange {
 impl CommitsRange {
     pub fn to_str(&self) -> String {
         return format!(
-            "{}^..{}",
+            "{}..{}",
             &self.from,
             &self.to,
         );

@@ -6,8 +6,8 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 #[structopt(name = "ssc", about = "should-skip-ci")]
 struct RawCli {
-    #[structopt(long = "dir", help = "The dir to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple dirs.")]
-    dirs: Vec<PathBuf>,
+    #[structopt(long = "path", help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths.")]
+    paths: Vec<PathBuf>,
 
     #[structopt(long = "pr-url", default_value = "", help = "The app name for which this CI job is for.")]
     pr_url: String,
@@ -28,28 +28,28 @@ struct RawCli {
 // The Cli struct represents the resolved CLI args and options.
 pub struct Cli {
     raw_cli: RawCli,
-    dirs: Vec<PathBuf>,
+    paths: Vec<PathBuf>,
 }
 
 impl Cli {
     pub fn new() -> Self {
         let raw_cli: RawCli = RawCli::from_args();
-        let mut dirs: Vec<PathBuf> = Vec::new();
+        let mut paths: Vec<PathBuf> = Vec::new();
 
-        if raw_cli.dirs.is_empty() {
-            dirs.push(current_dir().unwrap());
+        if raw_cli.paths.is_empty() {
+            paths.push(current_dir().unwrap());
         } else {
-            dirs = raw_cli.dirs.to_vec();
+            paths = raw_cli.paths.to_vec();
         }
 
         return Cli {
             raw_cli: raw_cli,
-            dirs: dirs,
+            paths: paths,
         }
     }
 
-    pub fn dirs(&self) -> &Vec<PathBuf> {
-        return &self.dirs;
+    pub fn paths(&self) -> &Vec<PathBuf> {
+        return &self.paths;
     }
 
     pub fn pr_url(&self) -> &String {

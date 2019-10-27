@@ -44,8 +44,8 @@ CLI usage :
 
 ```bash
 $ ssc \
-    --dir apps/api \            # Defaults to cwd when no dirs are provided.
-    --dir apps/frontend \       # Multiple dirs can be specified in order to
+    --path apps/api \           # Defaults to cwd when no paths are provided.
+    --path apps/frontend \      # Multiple paths can be specified in order to
                                 # continue the build for this app when changes
                                 # on multiple apps should be considered (i.e.
                                 # for integration purposes).

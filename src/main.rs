@@ -11,7 +11,7 @@ fn main() {
 
     let commits_range: CommitsRange = resolve_commits_range(&cli);
 
-    if has_changes_in_paths(&commits_range, cli.dirs()) {
+    if has_changes_in_paths(&commits_range, cli.paths()) {
         println!("CHANGES DETECTED");
     } else {
         println!("NO CHANGES DETECTED");

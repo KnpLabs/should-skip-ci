@@ -34,15 +34,37 @@ to determine what are the apps impacted by the changes.
 Then, on the CI job, we could skip the current app job when the changes aren't
 related or aren't impacting this app.
 
+### Use cases
+
+- on a PR : compare range of commits from <hash> to HEAD
+- on a merge : compare the latest commit (eg on the `master` branch or on the
+`develop` branch)
+
+CLI usage :
+
+```bash
+$ ssc \
+    --dir apps/api \            # Defaults to cwd when no dirs are provided.
+    --dir apps/frontend \       # Multiple dirs can be specified in order to
+                                # continue the build for this app when changes
+                                # on multiple apps should be considered (i.e.
+                                # for integration purposes).
+    --pr-url <url> \            # Optional, the URL of a PR to use to fetch a
+                                # range of commits.
+    --auth <auth> \             # The credentials to use to fetch a range of
+                                # commits on the given pr-url.
+    --from <from_commit_hash> \ # Defaults to HEAD~1, overriden by the first
+                                # PR commit when the --pr-url flag is provided
+                                # and not empty, and the PR commits could be
+                                # fetched.
+    --to <to_commit_hash> \     # Defaults to HEAD.
+    --cmd "<skip_job_cmd>"      # The command to use to skip the build.
+```
+
 ### Workflow
 
 The tool should be used to indicate if the build for a given app should be
-skipped :
-
-```bash
-# ssc : should skip ci
-$ ssc <app_name>
-```
+skipped.
 
 When the job of the given app should be skipped, the tool will call the command
 to skip the job (the command depends on the CI platform). When the job should
@@ -52,98 +74,17 @@ On pull requests (aka merge requests), we can detect the changes contained in
 the PR by looking at the commits of the PR.
 
 For commits on the `master` branch, we could only look to the latest commit
-to detect the changes, as the latest commit should be a merge commit (i.e. when
-the developer merges a PR).
+to detect the changes.
 
-In order to determine the apps dependency graph, we could use a simple yaml
-file :
-
-```yaml
-apps:
-
-  api:
-    path: apps/api
-
-  cli:
-    path: apps/cli
-
-  frontend:
-    path: apps/frontend
-    depends_on:
-      - api
-```
-
-When running the tool for an app, it'll look if the changes are in the app's
-path. When it's the case, the app is detected as impacted and the CI build of
-this app should continue. E.g. the changes on `apps/api` should let the `api`
-build run.
-
-When the changes are on the path of an app on which the given app depends on,
-the CI build of the given app should continue. E.g. the changes on `apps/api`
-should let the `frontend` build run as the `frontend` app depends on the `api`
-app.
-
-When none of the above cases are encountered, the CI build of the given app
-should be skipped.
-
-### Integration
-
-#### Distribution
+### Distribution
 
 We could distribute the tool a single binary file. The tool could be downloaded
-in a CI build step and be used this way :
-
-```bash
-$ ssh -c ssh.yml
-```
-
-Detailed usage :
-
-```bash
-Usage: ssc -c CONFIG_FILE APP_NAME
-Skips the CI build of the specified APP_NAME if the changes of this build
-aren't impacting this app.
-
-Mandatory arguments :
-
--c --config[=CONFIG_FILE]   The config file to use (yaml).
-APP_NAME                    The app (defined in the config file) for which the
-                            current CI build is for.
-```
+in a CI build step.
 
 The tool should be ran in a directory which is inside a git repository.
 
 As the tool will run the command to stop the current build, it should be
-exdcuted by the CI executor itself.
-
-#### Configuration : CI platform
-
-The command to stop the build depends on the CI platform. We can add a
-`ci_platform` key to the config file in order to indicate on which platform the
-build is executed, so the tool will know which command to run to skip the build,
-e.g. :
-
-```yaml
-ci_platform: circleci
-```
-
-For each platform to support, a dedicated handler should be implemented. For
-each platform, the tool should be able to :
-
-- provide the command to execute in order to skip the build
-- provide informations related to the changes of the build, such as a PR URL.
-These informations may be available in env vars, with specific naming in
-function of the platform.
-
-#### Configuration : VCS platform
-
-Similarly to CI platforms, the VCS platform should be specified in order to
-let the tool know how to fetch details about the latest changes (e.g. to use
-an HTTP API to get the commits of a PR) :
-
-```yaml
-vcs_platform: github
-```
+executed by the CI executor itself.
 
 ## Status
 

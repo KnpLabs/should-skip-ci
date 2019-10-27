@@ -3,10 +3,9 @@ version: '3.7'
 
 services:
   app:
-    image: rust:1.38.0-buster
+    build:
+      context: .
     environment:
       - CARGO_HOME=/app/.cargo
-    user: "1000"
-    working_dir: /app
     volumes:
       - "./:/app"

@@ -1,7 +1,7 @@
 # should-skip-ci
 
 A tool to use to skip a CI build when the changes of a range of commits aren't
-related to the given path.
+related to the given path(s).
 
 See the [expectations](/doc/arch/adr-001-expectations.md) to know why this tool
 has been created.

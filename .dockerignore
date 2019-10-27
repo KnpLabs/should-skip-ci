@@ -1,0 +1,2 @@
+# ignore all during docker image build
+*

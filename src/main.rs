@@ -3,8 +3,35 @@ mod cli;
 use cli::Cli;
 
 fn main() {
-    let cli: Cli = Cli::new();
+    let mut cli: Cli = Cli::new();
 
-    println!("Config file is {:?}.", cli.config_file().to_str().unwrap());
-    println!("App name is {:?}.", cli.app_name());
+    println!(
+        "Dirs to inspect are {:?}.",
+        cli.dirs()
+    );
+
+    println!(
+        "PR URL is {:?}",
+        cli.pr_url()
+    );
+
+    println!(
+        "auth is {:?}",
+        cli.auth()
+    );
+
+    println!(
+        "from is {:?}",
+        cli.from()
+    );
+
+    println!(
+        "to is {:?}",
+        cli.to()
+    );
+
+    println!(
+        "cmd is {:?}",
+        cli.cmd()
+    );
 }

@@ -9,4 +9,9 @@ fn main() {
         "Dirs to inspect are {:?}.",
         cli.dirs()
     );
+
+    println!(
+        "PR URL is {:?}",
+        cli.pr_url()
+    )
 }

@@ -6,14 +6,6 @@ pub struct CommitsRange {
 }
 
 impl CommitsRange {
-    pub fn from(&self) -> &String {
-        return &self.from;
-    }
-
-    pub fn to(&self) -> &String {
-        return &self.to;
-    }
-
     pub fn to_str(&self) -> String {
         return format!(
             "{}^..{}",

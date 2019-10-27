@@ -1,14 +1,12 @@
+use std::env::current_dir;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
 #[structopt(name = "ssc", about = "should-skip-ci")]
 pub struct Cli {
-    #[structopt(short = "c", long = "config", help = "Config file (YAML).")]
-    config_file: PathBuf,
-
-    #[structopt(help = "The app name for which this CI job is for.")]
-    app_name: String,
+    #[structopt(long = "dir", help = "The dir to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple dirs.")]
+    dirs: Vec<PathBuf>,
 }
 
 impl Cli {
@@ -16,11 +14,11 @@ impl Cli {
         return Cli::from_args();
     }
 
-    pub fn config_file(&self) -> &PathBuf {
-        return &self.config_file;
-    }
+    pub fn dirs(&mut self) -> &Vec<PathBuf> {
+        if self.dirs.is_empty() {
+            self.dirs.push(current_dir().unwrap())
+        }
 
-    pub fn app_name(&self) -> &String {
-        return &self.app_name;
+        return &self.dirs
     }
 }

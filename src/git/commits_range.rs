@@ -1,0 +1,24 @@
+use crate::cli::Cli;
+
+pub struct CommitsRange {
+    from: String,
+    to: String,
+}
+
+impl CommitsRange {
+    pub fn from(&self) -> &String {
+        return &self.from;
+    }
+
+    pub fn to(&self) -> &String {
+        return &self.to;
+    }
+}
+
+pub fn resolve_commits_range(cli: &Cli) -> CommitsRange {
+    // @TODO consider the --pr-url flag to determine the commits range
+    return CommitsRange{
+        from: String::from(cli.from()),
+        to: String::from(cli.to()),
+    }
+}

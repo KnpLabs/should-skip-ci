@@ -13,6 +13,14 @@ impl CommitsRange {
     pub fn to(&self) -> &String {
         return &self.to;
     }
+
+    pub fn to_str(&self) -> String {
+        return format!(
+            "{}^..{}",
+            &self.from,
+            &self.to,
+        );
+    }
 }
 
 pub fn resolve_commits_range(cli: &Cli) -> CommitsRange {

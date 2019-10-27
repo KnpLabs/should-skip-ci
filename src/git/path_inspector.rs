@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 use crate::git::commits_range::CommitsRange;
+use crate::git::asserter::assert_or_panic;
 
 pub fn has_changes_in_paths(
     commits_range: &CommitsRange,
@@ -14,13 +15,7 @@ pub fn has_changes_in_paths(
         .expect("Failed to run git log command.")
     ;
 
-    if !result.status.success() {
-        panic!(format!(
-            "error: git log command exited with status code {}. Reason: {}",
-            result.status.code().unwrap(),
-            String::from_utf8(result.stderr).unwrap(),
-        ));
-    }
+    assert_or_panic(&result, &String::from("git log"));
 
     return !result.stdout.is_empty();
 }

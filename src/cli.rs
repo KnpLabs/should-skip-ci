@@ -2,9 +2,10 @@ use std::env::current_dir;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
+// RawCli represents the CLI args and options as passed on a shell.
 #[derive(StructOpt)]
 #[structopt(name = "ssc", about = "should-skip-ci")]
-pub struct Cli {
+struct RawCli {
     #[structopt(long = "dir", help = "The dir to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple dirs.")]
     dirs: Vec<PathBuf>,
 
@@ -24,36 +25,50 @@ pub struct Cli {
     cmd: String,
 }
 
+// The Cli struct represents the resolved CLI args and options.
+pub struct Cli {
+    raw_cli: RawCli,
+    dirs: Vec<PathBuf>,
+}
+
 impl Cli {
     pub fn new() -> Self {
-        return Cli::from_args();
-    }
+        let raw_cli: RawCli = RawCli::from_args();
+        let mut dirs: Vec<PathBuf> = Vec::new();
 
-    pub fn dirs(&mut self) -> &Vec<PathBuf> {
-        if self.dirs.is_empty() {
-            self.dirs.push(current_dir().unwrap())
+        if raw_cli.dirs.is_empty() {
+            dirs.push(current_dir().unwrap());
+        } else {
+            dirs = raw_cli.dirs.to_vec();
         }
 
+        return Cli {
+            raw_cli: raw_cli,
+            dirs: dirs,
+        }
+    }
+
+    pub fn dirs(&self) -> &Vec<PathBuf> {
         return &self.dirs;
     }
 
     pub fn pr_url(&self) -> &String {
-        return &self.pr_url;
+        return &self.raw_cli.pr_url;
     }
 
     pub fn auth(&self) -> &String {
-        return &self.auth;
+        return &self.raw_cli.auth;
     }
 
     pub fn from(&self) -> &String {
-        return &self.from;
+        return &self.raw_cli.from;
     }
 
     pub fn to(&self) -> &String {
-        return &self.to;
+        return &self.raw_cli.to;
     }
 
     pub fn cmd(&self) -> &String {
-        return &self.cmd;
+        return &self.raw_cli.cmd;
     }
 }

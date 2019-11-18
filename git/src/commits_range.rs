@@ -1,6 +1,5 @@
-use crate::cli::Cli;
-use crate::git::branch::get_current_branch;
-use crate::git::branch::get_merge_base_commit;
+use crate::branch::get_current_branch;
+use crate::branch::get_merge_base_commit;
 
 pub struct CommitsRange {
     from: String,
@@ -17,9 +16,9 @@ impl CommitsRange {
     }
 }
 
-pub fn resolve_commits_range(cli: &Cli) -> CommitsRange {
+pub fn resolve_commits_range(base_branch: &String) -> CommitsRange {
     return CommitsRange{
-        from: resolve_range_start_commit(cli.base_branch()),
+        from: resolve_range_start_commit(base_branch),
         to: String::from("HEAD"),
     }
 }

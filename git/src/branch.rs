@@ -1,5 +1,6 @@
 use std::process::Command;
-use crate::git::asserter::assert_or_panic;
+
+use utils::assert_or_panic;
 
 pub fn get_current_branch() -> String {
     let result = Command::new("git")

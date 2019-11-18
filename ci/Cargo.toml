@@ -1,0 +1,5 @@
+[package]
+name = "ci"
+version = "0.1.0"
+authors = ["KNP Labs"]
+edition = "2018"

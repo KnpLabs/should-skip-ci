@@ -1,7 +1,8 @@
 use std::path::PathBuf;
 use std::process::Command;
-use crate::git::commits_range::CommitsRange;
-use crate::git::asserter::assert_or_panic;
+
+use utils::assert_or_panic;
+use crate::commits_range::CommitsRange;
 
 pub fn has_changes_in_paths(
     commits_range: &CommitsRange,

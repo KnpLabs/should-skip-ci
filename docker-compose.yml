@@ -7,5 +7,6 @@ services:
       context: .
     environment:
       - CARGO_HOME=/app/.cargo
+      - "USER=KNP Labs"
     volumes:
       - "./:/app"

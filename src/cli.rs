@@ -9,17 +9,8 @@ struct RawCli {
     #[structopt(long = "path", help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths.")]
     paths: Vec<PathBuf>,
 
-    #[structopt(long = "pr-url", default_value = "", help = "The app name for which this CI job is for.")]
-    pr_url: String,
-
-    #[structopt(long = "auth", default_value = "", help = "The credentials to use to connect to the PR URL.")]
-    auth: String,
-
-    #[structopt(long = "from", default_value = "HEAD~1", help = "From commit hash. Defaults to HEAD~1 overriden by the first PR commit when the --pr-url flag is provided.")]
-    from: String,
-
-    #[structopt(long = "to", default_value = "HEAD", help = "The end commit hash. Defaults to HEAD.")]
-    to: String,
+    #[structopt(long = "base-branch", default_value = "origin/master", help = "The branch to use as a base to know from where the commit range starts (i.e. to find the merge base).")]
+    base_branch: String,
 
     #[structopt(long = "cmd", help = "The command to use to skip the build.")]
     cmd: String,
@@ -52,20 +43,8 @@ impl Cli {
         return &self.paths;
     }
 
-    pub fn pr_url(&self) -> &String {
-        return &self.raw_cli.pr_url;
-    }
-
-    pub fn auth(&self) -> &String {
-        return &self.raw_cli.auth;
-    }
-
-    pub fn from(&self) -> &String {
-        return &self.raw_cli.from;
-    }
-
-    pub fn to(&self) -> &String {
-        return &self.raw_cli.to;
+    pub fn base_branch(&self) -> &String {
+        return &self.raw_cli.base_branch;
     }
 
     pub fn cmd(&self) -> &String {

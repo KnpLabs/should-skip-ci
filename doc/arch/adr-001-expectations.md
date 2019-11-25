@@ -49,15 +49,9 @@ $ ssc \
                                 # continue the build for this app when changes
                                 # on multiple apps should be considered (i.e.
                                 # for integration purposes).
-    --pr-url <url> \            # Optional, the URL of a PR to use to fetch a
-                                # range of commits.
-    --auth <auth> \             # The credentials to use to fetch a range of
-                                # commits on the given pr-url.
-    --from <from_commit_hash> \ # Defaults to HEAD~1, overriden by the first
-                                # PR commit when the --pr-url flag is provided
-                                # and not empty, and the PR commits could be
-                                # fetched.
-    --to <to_commit_hash> \     # Defaults to HEAD.
+    --base-branch <branch_name> # Defaults to `origin/master`. The branch to
+                                # use as a base to know from where the commit
+                                # range starts (i.e. to find the merge base).
     --cmd "<skip_job_cmd>"      # The command to use to skip the build.
 ```
 

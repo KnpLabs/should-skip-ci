@@ -4,7 +4,7 @@ version = "0.0.0"
 authors = ["KNP Labs"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-structopt = "0.3"
+ci = { path = "ci" }
+cli = { path = "cli" }
+git = { path = "git" }

@@ -9,7 +9,10 @@ struct RawCli {
     #[structopt(long = "path", help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths.")]
     paths: Vec<PathBuf>,
 
-    #[structopt(long = "base-branch", default_value = "origin/master", help = "The branch to use as a base to know from where the commit range starts (i.e. to find the merge base).")]
+    #[structopt(long = "remote", default_value = "origin", help = "The name of the tracked repository.")]
+    remote: String,
+
+    #[structopt(long = "base-branch", default_value = "master", help = "The branch to use as a base to know from where the commit range starts (i.e. to find the merge base).")]
     base_branch: String,
 
     #[structopt(long = "cmd", help = "The command to use to skip the build.")]
@@ -41,6 +44,10 @@ impl Cli {
 
     pub fn paths(&self) -> &Vec<PathBuf> {
         return &self.paths;
+    }
+
+    pub fn remote(&self) -> &String {
+        return &self.raw_cli.remote;
     }
 
     pub fn base_branch(&self) -> &String {

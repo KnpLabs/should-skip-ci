@@ -1,4 +1,5 @@
 use crate::branch::get_current_branch;
+use crate::branch::get_current_remote;
 use crate::branch::get_merge_base_commit;
 
 pub struct CommitsRange {
@@ -16,24 +17,39 @@ impl CommitsRange {
     }
 }
 
-pub fn resolve_commits_range(base_branch: &String) -> CommitsRange {
+pub fn resolve_commits_range(
+    remote: &String,
+    base_branch: &String,
+) -> CommitsRange {
     return CommitsRange{
-        from: resolve_range_start_commit(base_branch),
+        from: resolve_range_start_commit(
+            remote,
+            base_branch,
+        ),
         to: String::from("HEAD"),
     }
 }
 
-fn resolve_range_start_commit(base_branch: &String) -> String {
+fn resolve_range_start_commit(
+    remote: &String,
+    base_branch: &String,
+) -> String {
+    let current_remote: String = get_current_remote();
     let current_branch: String = get_current_branch();
 
-    if current_branch == base_branch.to_owned() {
-        // When we're on the base branch, use HEAD~1 as the range start commit
-        // as it should be a merge commit.
+    if current_remote == remote.to_owned()
+      && current_branch == base_branch.to_owned()
+    {
+        // When we've checked out the remote base branch, use HEAD~1
+        // as the range start commit as it should be a merge commit.
         return String::from("HEAD~1");
     }
 
     // When we're not on the base branch, we determine the range start commit
     // from the point when the current branch has been issued from the base
     // branch.
-    return get_merge_base_commit(base_branch);
+    return get_merge_base_commit(
+        remote,
+        base_branch,
+    );
 }

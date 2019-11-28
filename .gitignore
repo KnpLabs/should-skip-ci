@@ -1,2 +1,3 @@
 .cargo/
+git/Cargo.lock
 target/

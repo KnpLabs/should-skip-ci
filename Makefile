@@ -12,4 +12,11 @@ build-release:
 .PHONY: test-unit
 test-unit:
 	docker-compose run --rm app \
-		cargo test -p ci --all-targets
+		cargo test --tests \
+		-p ci \
+		# add the other packages to test with the -p flag
+
+.PHONY: test-functional
+test-functional:
+	docker-compose run --rm app \
+		cargo test --tests

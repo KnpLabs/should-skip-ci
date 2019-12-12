@@ -1,12 +1,16 @@
+use std::path::PathBuf;
 use std::process::Command;
 
 use utils::assert_or_panic;
 
-pub fn get_current_branch() -> String {
+pub fn get_current_branch(
+    working_directory: &PathBuf,
+) -> String {
     let result = Command::new("git")
         .arg("rev-parse")
         .arg("--abbrev-ref")
         .arg("HEAD")
+        .current_dir(&working_directory)
         .output()
         .expect("Failed to determine current branch.")
     ;
@@ -18,10 +22,13 @@ pub fn get_current_branch() -> String {
     return String::from(output.trim());
 }
 
-pub fn get_current_remote() -> String {
+pub fn get_current_remote(
+    working_directory: &PathBuf,
+) -> String {
     let result = Command::new("git")
         .arg("remote")
         .arg("show")
+        .current_dir(&working_directory)
         .output()
         .expect("Failed to determine current remote.")
     ;
@@ -34,6 +41,7 @@ pub fn get_current_remote() -> String {
 }
 
 pub fn get_merge_base_commit(
+    working_directory: &PathBuf,
     remote: &String,
     base_branch: &String,
 ) -> String {
@@ -45,6 +53,7 @@ pub fn get_merge_base_commit(
             base_branch,
         ))
         .arg("HEAD")
+        .current_dir(&working_directory)
         .output()
         .expect("Failed to determine merge base.")
     ;

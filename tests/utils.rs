@@ -264,3 +264,32 @@ pub fn create_api_test_file(
         &filepath.to_str().unwrap(),
     ));
 }
+
+pub fn checkout_base_branch(
+    repo_path: &PathBuf,
+) {
+    Command::new("git")
+        .arg("checkout")
+        .arg("master")
+        .current_dir(&repo_path)
+        .output()
+        .expect("Unable to go on the base branch")
+    ;
+}
+
+pub fn merge_branch_on_base_branch_non_fast_forward(
+    repo_path: &PathBuf,
+    branch_name: &String,
+    message: &String,
+) {
+    Command::new("git")
+        .arg("merge")
+        .arg("--no-ff")
+        .arg(&branch_name)
+        .arg("-m")
+        .arg(&message)
+        .current_dir(&repo_path)
+        .output()
+        .expect("Unable to merge the branch into the base branch")
+    ;
+}

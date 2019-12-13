@@ -16,10 +16,12 @@ use utils::{
     append_content_to_api_readme,
     commit_and_push_changes,
     create_api_test_file,
+    checkout_base_branch,
+    merge_branch_on_base_branch_non_fast_forward,
 };
 
 #[test]
-fn it_should_detect_changes_on_branch() {
+fn it_should_detect_changes_on_a_merge_commit_on_master() {
     // Setup test case
 
     let rdm = rand::random::<u32>();
@@ -51,6 +53,14 @@ fn it_should_detect_changes_on_branch() {
         &local_repo_path,
         &branch_name,
         &String::from("second commit"),
+    );
+
+    checkout_base_branch(&local_repo_path);
+
+    merge_branch_on_base_branch_non_fast_forward(
+        &local_repo_path,
+        &branch_name,
+        &String::from("merge test branch into base branch")
     );
 
     // Run should-skip-ci and make assertions

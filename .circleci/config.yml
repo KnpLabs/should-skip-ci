@@ -38,6 +38,16 @@ reference:
       name: Run functional tests
       command: make test-functional
 
+  build_release_step: &build_release_step
+    run:
+      name: Build release
+      command: make build-release
+
+  upload_release_asset_step: &upload_release_asset_step
+    run:
+      name: Upload release asset
+      command: GIT_TAG=${CIRCLE_TAG} SSC_BIN=target/release/ssc .circleci/upload_release_asset.sh
+
 jobs:
   test_job:
     <<: *vm_machine
@@ -49,9 +59,25 @@ jobs:
       - <<: *run_functional_tests_step
       - <<: *save_cache_step
 
+  release_job:
+    <<: *vm_machine
+    steps:
+      - <<: *checkout_step
+      - <<: *build_docker_image_step
+      - <<: *restore_cache_step
+      - <<: *build_release_step
+      - <<: *upload_release_asset_step
+
 workflows:
   version: 2
 
   test:
     jobs:
-      - test_job: ~
+      - test_job
+
+  release:
+    jobs:
+      - release_job:
+          filters:
+            branches: { ignore: /.*/ }
+            tags: { only: /v.*/ }

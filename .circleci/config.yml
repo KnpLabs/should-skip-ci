@@ -1,0 +1,57 @@
+version: 2
+
+reference:
+  vm_machine: &vm_machine
+    working_directory: ~/should-skip-ci
+    machine:
+      image: circleci/classic:201808-01
+      docker_layer_caching: true
+
+  checkout_step: &checkout_step
+    checkout:
+      path: ~/should-skip-ci
+
+  restore_cache_step: &restore_cache_step
+    restore_cache:
+      keys:
+        - cargo-{{ checksum "Cargo.lock" }}
+        - cargo-
+
+  save_cache_step: &save_cache_step
+    save_cache:
+      key: cargo-{{ checksum "Cargo.lock" }}
+      paths:
+        - .cargo/
+
+  build_docker_image_step: &build_docker_image_step
+    run:
+      name: Build docker image
+      command: make build
+
+  run_unit_tests_step: &run_unit_tests_step
+    run:
+      name: Run unit tests
+      command: make test-unit
+
+  run_functional_tests_step: &run_functional_tests_step
+    run:
+      name: Run functional tests
+      command: make test-functional
+
+jobs:
+  test_job:
+    <<: *vm_machine
+    steps:
+      - <<: *checkout_step
+      - <<: *build_docker_image_step
+      - <<: *restore_cache_step
+      - <<: *run_unit_tests_step
+      - <<: *run_functional_tests_step
+      - <<: *save_cache_step
+
+workflows:
+  version: 2
+
+  test:
+    jobs:
+      - test_job: ~

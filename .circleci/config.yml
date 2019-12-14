@@ -28,6 +28,14 @@ reference:
       name: Build docker image
       command: make build
 
+  chown_working_directory_step: &chown_working_directory_step
+    run:
+      name: Chown working directory
+      command: |
+        # Change the owner of the whole project as CircleCI run with
+        # uid 1001 but uid 1000 is used in the containers.
+        sudo chown -R 1000 .
+
   run_unit_tests_step: &run_unit_tests_step
     run:
       name: Run unit tests
@@ -55,6 +63,7 @@ jobs:
       - <<: *checkout_step
       - <<: *build_docker_image_step
       - <<: *restore_cache_step
+      - <<: *chown_working_directory_step
       - <<: *run_unit_tests_step
       - <<: *run_functional_tests_step
       - <<: *save_cache_step
@@ -65,6 +74,7 @@ jobs:
       - <<: *checkout_step
       - <<: *build_docker_image_step
       - <<: *restore_cache_step
+      - <<: *chown_working_directory_step
       - <<: *build_release_step
       - <<: *upload_release_asset_step
 

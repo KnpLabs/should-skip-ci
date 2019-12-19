@@ -84,7 +84,7 @@ executed by the CI executor itself.
 
 ## Status
 
-In discussion.
+Approved.
 
 ## Consequences
 

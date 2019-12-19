@@ -1,0 +1,69 @@
+version: 2
+
+reference:
+  vm_machine: &vm_machine
+    working_directory: ~/my-project
+    machine:
+      image: circleci/classic:201808-01
+
+  checkout_step: &checkout_step
+    checkout:
+      path: ~/my-project
+
+  # We use a dedicated step in this exemple to install should-skip-ci, but you
+  # can also create your own VM image with this tool installed in it when you're
+  # running on your own installation of CircleCI.
+  # SaaS users of CircleCI can use Orbs to share build steps accross projects
+  # and organizations.
+  # @see https://circleci.com/docs/2.0/vm-service/#customizing-and-creating-vm-service-images
+  # @see https://circleci.com/orbs/
+  install_should_skip_ci_step: &install_should_skip_ci_step
+    run:
+      name: Install should-skip-ci
+      command: |
+        sudo curl -sSL -o /usr/local/bin/ssc https://github.com/KnpLabs/should-skip-ci/releases/download/<version>/ssc-x86_64
+        sudo chmod +x /usr/local/bin/ssc
+
+  skip_ci_when_no_changes_on_api_step: &skip_ci_when_no_changes_on_api_step
+    run:
+      name: Skip CI when no changes on API
+      command: ssc --path apps/api --cmd "circleci-agent step halt"
+
+  skip_ci_when_no_changes_on_front_step: &skip_ci_when_no_changes_on_front_step
+    run:
+      name: Skip CI when no changes on front
+      command: ssc --path apps/front --cmd "circleci-agent step halt"
+
+  run_api_tests_step: &run_api_tests_step
+    run:
+      name: Run API tests
+      command: make -C apps/api test
+
+  run_front_tests_step: &run_front_tests_step
+    run:
+      name: Run front tests
+      command: make -C apps/front test
+
+jobs:
+  api_test_job:
+    <<: *vm_machine
+    steps:
+      - <<: *checkout_step
+      - <<: *install_should_skip_ci_step
+      - <<: *skip_ci_when_no_changes_on_api_step
+      - <<: *run_api_tests_step
+
+  front_test_job:
+    <<: *vm_machine
+    steps:
+      - <<: *checkout_step
+      - <<: *install_should_skip_ci_step
+      - <<: *skip_ci_when_no_changes_on_front_step
+      - <<: *run_front_tests_step
+workflows:
+  version: 2
+
+  test:
+    jobs:
+      - api_test_job
+      - front_test_job

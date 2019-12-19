@@ -14,8 +14,8 @@ reference:
   restore_cache_step: &restore_cache_step
     restore_cache:
       keys:
-        - cargo-v3-dbg-{{ checksum "Cargo.lock" }}
-        - cargo-v3-dbg-
+        - cargo-v4-dbg-{{ checksum "Cargo.lock" }}
+        - cargo-v4-dbg-
 
   enlight_cache_step: &enlight_cache_step
     run:
@@ -26,9 +26,10 @@ reference:
 
   save_cache_step: &save_cache_step
     save_cache:
-      key: cargo-v3-dbg-{{ checksum "Cargo.lock" }}
+      key: cargo-v4-dbg-{{ checksum "Cargo.lock" }}
       paths:
         - .cargo/
+        - target/
 
   build_docker_image_step: &build_docker_image_step
     run:

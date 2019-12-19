@@ -8,3 +8,6 @@ edition = "2018"
 ci = { path = "ci" }
 cli = { path = "cli" }
 git = { path = "git" }
+
+[dev-dependencies]
+rand = "0.7"

@@ -1,3 +1,4 @@
+use std::path::PathBuf;
 use crate::branch::get_current_branch;
 use crate::branch::get_current_remote;
 use crate::branch::get_merge_base_commit;
@@ -18,11 +19,13 @@ impl CommitsRange {
 }
 
 pub fn resolve_commits_range(
+    working_directory: &PathBuf,
     remote: &String,
     base_branch: &String,
 ) -> CommitsRange {
     return CommitsRange{
         from: resolve_range_start_commit(
+            &working_directory,
             remote,
             base_branch,
         ),
@@ -31,11 +34,12 @@ pub fn resolve_commits_range(
 }
 
 fn resolve_range_start_commit(
+    working_directory: &PathBuf,
     remote: &String,
     base_branch: &String,
 ) -> String {
-    let current_remote: String = get_current_remote();
-    let current_branch: String = get_current_branch();
+    let current_remote: String = get_current_remote(&working_directory);
+    let current_branch: String = get_current_branch(&working_directory);
 
     if current_remote == remote.to_owned()
       && current_branch == base_branch.to_owned()
@@ -49,6 +53,7 @@ fn resolve_range_start_commit(
     // from the point when the current branch has been issued from the base
     // branch.
     return get_merge_base_commit(
+        &working_directory,
         remote,
         base_branch,
     );

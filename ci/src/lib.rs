@@ -13,3 +13,15 @@ pub fn run_stop_cmd(cmd: &String) -> i32 {
 
     return result.status.code().unwrap();
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_cmd_exit_code_is_returned() {
+        assert_eq!(0, run_stop_cmd(&String::from("true")));
+
+        assert_eq!(1, run_stop_cmd(&String::from("false")));
+    }
+}

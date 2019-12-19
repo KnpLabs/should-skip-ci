@@ -14,12 +14,19 @@ reference:
   restore_cache_step: &restore_cache_step
     restore_cache:
       keys:
-        - cargo-{{ checksum "Cargo.lock" }}
-        - cargo-
+        - cargo-v3-dbg-{{ checksum "Cargo.lock" }}
+        - cargo-v3-dbg-
+
+  enlight_cache_step: &enlight_cache_step
+    run:
+      name: Enlight cache
+      # @see https://docs.travis-ci.com/user/languages/rust/#dependency-management
+      # use sudo due to the different uid betweeb circleci user and docker user
+      command: sudo rm -rf .cargo/registry/src
 
   save_cache_step: &save_cache_step
     save_cache:
-      key: cargo-{{ checksum "Cargo.lock" }}
+      key: cargo-v3-dbg-{{ checksum "Cargo.lock" }}
       paths:
         - .cargo/
 
@@ -66,6 +73,7 @@ jobs:
       - <<: *chown_working_directory_step
       - <<: *run_unit_tests_step
       - <<: *run_functional_tests_step
+      - <<: *enlight_cache_step
       - <<: *save_cache_step
 
   release_job:

@@ -207,6 +207,7 @@ pub fn checkout_new_branch(
 
 pub fn append_content_to_api_readme(
     repo_path: &PathBuf,
+    content: &String,
 ) {
     let mut filepath = PathBuf::from(&repo_path);
     filepath.push("apps/api");
@@ -218,7 +219,7 @@ pub fn append_content_to_api_readme(
         .unwrap()
     ;
 
-    writeln!(file, "\nmore content").unwrap();
+    writeln!(file, "{}", &content).unwrap();
 }
 
 pub fn commit_and_push_changes(

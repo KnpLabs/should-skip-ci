@@ -40,7 +40,10 @@ fn it_should_detect_changes_on_branch() {
     let branch_name = String::from("test/new-branch");
     checkout_new_branch(&local_repo_path, &branch_name);
 
-    append_content_to_api_readme(&local_repo_path);
+    append_content_to_api_readme(
+        &local_repo_path,
+        &String::from("\nmore content"),
+    );
 
     commit_and_push_changes(
         &local_repo_path,

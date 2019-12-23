@@ -16,7 +16,7 @@ use utils::{
     append_content_to_api_readme,
     commit_and_push_changes,
     create_api_test_file,
-    checkout_base_branch,
+    checkout_branch,
     merge_branch_on_base_branch_non_fast_forward,
 };
 
@@ -34,7 +34,10 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
 
     set_remote_repo(&local_repo_path, &remote_repo_path);
 
-    create_and_push_initial_commit(&local_repo_path);
+    create_and_push_initial_commit(
+        &local_repo_path,
+        &String::from("master"),
+    );
 
     let branch_name = String::from("test/new-branch");
     checkout_new_branch(&local_repo_path, &branch_name);
@@ -55,7 +58,10 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
         &String::from("second commit"),
     );
 
-    checkout_base_branch(&local_repo_path);
+    checkout_branch(
+        &local_repo_path,
+        &String::from("master"),
+    );
 
     merge_branch_on_base_branch_non_fast_forward(
         &local_repo_path,

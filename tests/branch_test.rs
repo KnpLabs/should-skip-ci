@@ -32,7 +32,10 @@ fn it_should_detect_changes_on_branch() {
 
     set_remote_repo(&local_repo_path, &remote_repo_path);
 
-    create_and_push_initial_commit(&local_repo_path);
+    create_and_push_initial_commit(
+        &local_repo_path,
+        &String::from("master"),
+    );
 
     let branch_name = String::from("test/new-branch");
     checkout_new_branch(&local_repo_path, &branch_name);

@@ -124,6 +124,7 @@ pub fn set_remote_repo(
 
 pub fn create_and_push_initial_commit(
     repo_path: &PathBuf,
+    branch_name: &String,
 ) {
     let filename = "README.md";
     let apps = vec!["apps/api", "apps/front"];
@@ -176,10 +177,13 @@ pub fn create_and_push_initial_commit(
     Command::new("git")
         .arg("push")
         .arg("origin")
-        .arg("master")
+        .arg(&branch_name)
         .current_dir(&repo_path)
         .output()
-        .expect("Unable to push master branch to remote.")
+        .expect(&format!(
+            "Unable to push {} branch to remote.",
+            &branch_name,
+        ))
     ;
 }
 
@@ -265,15 +269,19 @@ pub fn create_api_test_file(
     ));
 }
 
-pub fn checkout_base_branch(
+pub fn checkout_branch(
     repo_path: &PathBuf,
+    branch_name: &String,
 ) {
     Command::new("git")
         .arg("checkout")
-        .arg("master")
+        .arg(&branch_name)
         .current_dir(&repo_path)
         .output()
-        .expect("Unable to go on the base branch")
+        .expect(&format!(
+            "Unable to go on the {} branch.",
+            &branch_name,
+        ))
     ;
 }
 

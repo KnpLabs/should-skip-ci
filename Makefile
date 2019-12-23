@@ -1,3 +1,9 @@
+TEST_FLAGS ?=
+
+ifneq (,$(CI))
+    TEST_FLAGS=--release
+endif
+
 .PHONY: build
 build:
 	docker-compose build
@@ -16,11 +22,11 @@ build-release:
 .PHONY: test-unit
 test-unit:
 	docker-compose run --rm app \
-		cargo test --tests \
+		cargo test --tests $(TEST_FLAGS) \
 		-p ci \
 		# add the other packages to test with the -p flag
 
 .PHONY: test-functional
 test-functional:
 	docker-compose run --rm app \
-		cargo test --tests
+		cargo test --tests $(TEST_FLAGS)

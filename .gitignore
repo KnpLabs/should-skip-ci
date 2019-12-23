@@ -1,3 +1,6 @@
 .cargo/
+ci/Cargo.lock
+cli/Cargo.lock
 git/Cargo.lock
+utils/Cargo.lock
 target/

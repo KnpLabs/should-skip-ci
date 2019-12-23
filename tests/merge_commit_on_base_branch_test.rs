@@ -17,7 +17,7 @@ use utils::{
     commit_and_push_changes,
     create_api_test_file,
     checkout_branch,
-    merge_branch_on_base_branch_non_fast_forward,
+    merge_given_branch_on_current_branch_non_fast_forward,
 };
 
 #[test]
@@ -70,10 +70,10 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
         &String::from("master"),
     );
 
-    merge_branch_on_base_branch_non_fast_forward(
+    merge_given_branch_on_current_branch_non_fast_forward(
         &local_repo_path,
         &branch_name,
-        &String::from("merge test branch into base branch")
+        &String::from("merge test branch into base branch"),
     );
 
     // Run should-skip-ci and make assertions

@@ -288,7 +288,7 @@ pub fn checkout_branch(
     ;
 }
 
-pub fn merge_branch_on_base_branch_non_fast_forward(
+pub fn merge_given_branch_on_current_branch_non_fast_forward(
     repo_path: &PathBuf,
     branch_name: &String,
     message: &String,

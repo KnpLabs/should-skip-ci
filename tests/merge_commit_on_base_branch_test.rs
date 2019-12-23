@@ -53,7 +53,11 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
         &String::from("first commit"),
     );
 
-    create_api_test_file(&local_repo_path);
+    create_api_test_file(
+        &local_repo_path,
+        &String::from("test.txt"),
+        &String::from("test content"),
+    );
 
     commit_and_push_changes(
         &local_repo_path,

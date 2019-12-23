@@ -256,14 +256,16 @@ pub fn commit_and_push_changes(
 
 pub fn create_api_test_file(
     repo_path: &PathBuf,
+    file_name: &String,
+    content: &String,
 ) {
     let mut filepath = PathBuf::from(&repo_path);
     filepath.push("apps/api");
-    filepath.push("test.txt");
+    filepath.push(&file_name);
 
     write(
         &filepath,
-        "test content",
+        &content,
     ).expect(&format!(
         "Unable to write {} file",
         &filepath.to_str().unwrap(),

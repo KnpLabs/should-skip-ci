@@ -1,7 +1,14 @@
 [package]
 name = "ssc"
 version = "0.1.0"
+description = "A CLI tool to skip a CI build that is not concerned by the latest changes."
+homepage = "https://github.com/KnpLabs/should-skip-ci"
+repository = "git@github.com:KnpLabs/should-skip-ci.git"
+documentation = "https://github.com/KnpLabs/should-skip-ci"
 authors = ["KNP Labs"]
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-file = "LICENSE"
 edition = "2018"
 
 [dependencies]

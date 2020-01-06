@@ -20,8 +20,28 @@ use utils::{
     merge_given_branch_on_current_branch_non_fast_forward,
 };
 
+/*
+
+This test file is meant to test a `master` and `develop` branches git based
+workflow.
+In this workflow, the `master` branch is ISO to the prod, and the `develop`
+branch contains the latest features.
+Developers usually issue new feature branches from the `develop` branch.
+The workflow is represented by the following schema :
+
+master ---o-------o
+           \     /
+develop     o---o
+             \ /
+feature1      o
+
+
+---> direction
+
+*/
+
 #[test]
-fn it_should_detect_changes_on_a_merge_commit_on_master() {
+fn it_should_detect_changes_on_master_when_merging_develop_on_master_and_having_develop_as_the_base_branch() {
     // Setup test case
 
     let rdm = rand::random::<u32>();
@@ -39,8 +59,8 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
         &String::from("master"),
     );
 
-    let branch_name = String::from("test/new-branch");
-    checkout_new_branch(&local_repo_path, &branch_name);
+    let develop_branch_name = String::from("develop");
+    checkout_new_branch(&local_repo_path, &develop_branch_name);
 
     append_content_to_api_readme(
         &local_repo_path,
@@ -49,9 +69,12 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
 
     commit_and_push_changes(
         &local_repo_path,
-        &branch_name,
-        &String::from("first commit"),
+        &develop_branch_name,
+        &String::from("first commit on develop"),
     );
+
+    let feature_branch_name = String::from("feature/first-one");
+    checkout_new_branch(&local_repo_path, &feature_branch_name);
 
     create_api_test_file(
         &local_repo_path,
@@ -61,8 +84,19 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
 
     commit_and_push_changes(
         &local_repo_path,
-        &branch_name,
-        &String::from("second commit"),
+        &feature_branch_name,
+        &String::from("first commit on feature branch"),
+    );
+
+    checkout_branch(
+        &local_repo_path,
+        &develop_branch_name,
+    );
+
+    merge_given_branch_on_current_branch_non_fast_forward(
+        &local_repo_path,
+        &feature_branch_name,
+        &String::from("merge feature branch into develop"),
     );
 
     checkout_branch(
@@ -72,8 +106,8 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
 
     merge_given_branch_on_current_branch_non_fast_forward(
         &local_repo_path,
-        &branch_name,
-        &String::from("merge test branch into base branch"),
+        &develop_branch_name,
+        &String::from("merge develop branch into master"),
     );
 
     // Run should-skip-ci and make assertions
@@ -105,7 +139,7 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
         &vec![api_app_path],
         &cmd,
         &String::from("origin"),
-        &String::from("master"),
+        &develop_branch_name,
     );
 
     // the stop command should not have been ran
@@ -117,7 +151,7 @@ fn it_should_detect_changes_on_a_merge_commit_on_master() {
         &vec![front_app_path],
         &cmd,
         &String::from("origin"),
-        &String::from("master"),
+        &develop_branch_name,
     );
 
     // the stop command should have been ran

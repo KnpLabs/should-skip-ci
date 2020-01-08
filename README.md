@@ -1,5 +1,7 @@
 # should-skip-ci
 
+[![CircleCI](https://circleci.com/gh/KnpLabs/should-skip-ci/tree/master.svg?style=svg)](https://circleci.com/gh/KnpLabs/should-skip-ci/tree/master)
+
 A CLI tool to skip a CI build that is not concerned by the latest changes.
 
 *Table of contents:*

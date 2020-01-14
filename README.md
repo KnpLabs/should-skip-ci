@@ -47,7 +47,8 @@ When there are changes on the paths, the tool does nothing (and so the CI build
 continues).
 
 See the [expectations](/doc/arch/adr-001-expectations.md) to know why this tool
-has been created.
+has been created, as long as
+[this article](https://knplabs.com/en/blog/foss-project-explanation-of-should-skip-ci).
 
 ## CI setup
 

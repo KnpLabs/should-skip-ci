@@ -121,3 +121,5 @@ and then use `cargo` to launch the tool :
 ```bash
 $ cargo run -- <ssc_options>
 ```
+
+Also, see our [contributing guide](CONRIBUTING.md).

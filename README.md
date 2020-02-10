@@ -122,4 +122,4 @@ and then use `cargo` to launch the tool :
 $ cargo run -- <ssc_options>
 ```
 
-Also, see our [contributing guide](CONRIBUTING.md).
+Also, see our [contributing guide](CONTRIBUTING.md).

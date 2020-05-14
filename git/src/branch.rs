@@ -1,16 +1,25 @@
+extern crate log;
+
 use std::path::PathBuf;
 use std::process::Command;
+use log::debug;
 
 use utils::assert_or_panic;
 
 pub fn get_current_branch(
     working_directory: &PathBuf,
 ) -> String {
-    let result = Command::new("git")
+    let mut cmd = Command::new("git");
+    cmd
         .arg("rev-parse")
         .arg("--abbrev-ref")
         .arg("HEAD")
         .current_dir(&working_directory)
+    ;
+
+    debug!("Running `{:?}`", cmd);
+
+    let result = cmd
         .output()
         .expect("Failed to determine current branch.")
     ;
@@ -25,10 +34,16 @@ pub fn get_current_branch(
 pub fn get_current_remote(
     working_directory: &PathBuf,
 ) -> String {
-    let result = Command::new("git")
+    let mut cmd = Command::new("git");
+    cmd
         .arg("remote")
         .arg("show")
         .current_dir(&working_directory)
+    ;
+
+    debug!("Running `{:?}`", cmd);
+
+    let result = cmd
         .output()
         .expect("Failed to determine current remote.")
     ;
@@ -45,7 +60,8 @@ pub fn get_merge_base_commit(
     remote: &String,
     base_branch: &String,
 ) -> String {
-    let result = Command::new("git")
+    let mut cmd = Command::new("git");
+    cmd
         .arg("merge-base")
         .arg(format!(
             "{}/{}",
@@ -54,6 +70,11 @@ pub fn get_merge_base_commit(
         ))
         .arg("HEAD")
         .current_dir(&working_directory)
+    ;
+
+    debug!("Running `{:?}`", cmd);
+
+    let result = cmd
         .output()
         .expect("Failed to determine merge base.")
     ;

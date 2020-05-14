@@ -20,7 +20,7 @@ struct RawCli {
 
     // The number of occurrences of the `v/verbose` flag
     /// Verbose mode (-v, -vv, -vvv, etc.)
-    #[structopt(short, long, parse(from_occurrences), help = "Verbosity mode : -v")]
+    #[structopt(short, long, parse(from_occurrences), help = "Verbosity mode : -v, -vv")]
     verbosity: u8,
 }
 

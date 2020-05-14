@@ -37,7 +37,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "ci"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -58,7 +58,7 @@ dependencies = [
 
 [[package]]
 name = "cli"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "structopt 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -75,10 +75,10 @@ dependencies = [
 
 [[package]]
 name = "git"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "utils 0.1.0",
+ "utils 0.2.0",
 ]
 
 [[package]]
@@ -104,7 +104,7 @@ dependencies = [
 
 [[package]]
 name = "logger"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "simple_logger 1.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -190,12 +190,12 @@ dependencies = [
 
 [[package]]
 name = "ssc"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
- "ci 0.1.0",
- "cli 0.1.0",
- "git 0.1.0",
- "logger 0.1.0",
+ "ci 0.2.0",
+ "cli 0.2.0",
+ "git 0.2.0",
+ "logger 0.2.0",
  "rand 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -260,7 +260,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "utils"
-version = "0.1.0"
+version = "0.2.0"
 
 [[package]]
 name = "vec_map"

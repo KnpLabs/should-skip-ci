@@ -62,6 +62,8 @@ $ sudo curl -sSL -o /usr/local/bin/ssc https://github.com/KnpLabs/should-skip-ci
 $ sudo chmod +x /usr/local/bin/ssc
 ```
 
+See the latest version in the [releases panel](https://github.com/KnpLabs/should-skip-ci/releases).
+
 ### Usage
 
 ```
@@ -71,6 +73,7 @@ USAGE:
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
+    -v,-vv           Increases verbosity (-v for info, -vv for debug).
 
 OPTIONS:
     --base-branch <base-branch>    The branch to use as a base to know from where the commit range starts (i.e. to

@@ -14,9 +14,10 @@ pub fn has_changes_in_paths(
 ) -> bool {
     let mut cmd = Command::new("git");
     cmd
-        .arg("log")
-        .arg(commits_range.to_str())
+        .arg("diff")
         .arg("--stat")
+        .arg(commits_range.from())
+        .arg(commits_range.to())
         .args(paths)
         .current_dir(&working_directory)
     ;
@@ -28,9 +29,14 @@ pub fn has_changes_in_paths(
         .expect("Failed to run git log command.")
     ;
 
-    assert_or_panic(&result, &String::from("git log"));
+    assert_or_panic(&result, &String::from("git diff"));
 
-    info!("{}", String::from_utf8(result.stdout.to_vec()).unwrap());
+    info!(
+        "Detected diff from {} to {} :\n{}",
+        commits_range.from(),
+        commits_range.to(),
+        String::from_utf8(result.stdout.to_vec()).unwrap()
+    );
 
     return !result.stdout.is_empty();
 }

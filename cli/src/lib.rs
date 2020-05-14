@@ -17,6 +17,11 @@ struct RawCli {
 
     #[structopt(long = "cmd", help = "The command to use to skip the build.")]
     cmd: String,
+
+    // The number of occurrences of the `v/verbose` flag
+    /// Verbose mode (-v, -vv, -vvv, etc.)
+    #[structopt(short, long, parse(from_occurrences), help = "Verbosity mode : -v")]
+    verbosity: u8,
 }
 
 // The Cli struct represents the resolved CLI args and options.
@@ -56,5 +61,9 @@ impl Cli {
 
     pub fn cmd(&self) -> &String {
         return &self.raw_cli.cmd;
+    }
+
+    pub fn verbosity(&self) -> &u8 {
+        return &self.raw_cli.verbosity;
     }
 }

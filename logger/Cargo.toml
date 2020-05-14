@@ -1,8 +1,9 @@
 [package]
-name = "ci"
+name = "logger"
 version = "0.1.0"
 authors = ["KNP Labs"]
 edition = "2018"
 
 [dependencies]
 log = "0.4.8"
+simple_logger = { version = "1.6.0", default-features = false }

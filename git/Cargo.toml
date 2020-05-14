@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 utils = { path = "../utils" }
+log = "0.4.8"

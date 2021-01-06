@@ -100,7 +100,7 @@ is using git to identify the range of commits in your PR (i.e. the first and
 last commits). Then, the tool scans for changes on specified paths for this
 range of commits.
 - on a merge commit. When you run this tool on your base branch (defaults to
-`ogirin/master`), the tool only scans the latest commit. This latest commit
+`origin/master`), the tool only scans the latest commit. This latest commit
 should be a merge commit in order to identify all the changes that were brought
 in this merge.
 

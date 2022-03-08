@@ -1,4 +1,4 @@
-FROM rust:1.38.0-buster
+FROM rust:1.59.0-bullseye
 
 RUN apt-get update \
     && apt-get install -y \

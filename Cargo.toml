@@ -9,13 +9,12 @@ authors = ["KNP Labs"]
 readme = "README.md"
 license = "MIT"
 license-file = "LICENSE"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
-ci = { path = "ci" }
-cli = { path = "cli" }
-git = { path = "git" }
-logger = { path= "logger" }
+log = "0.4"
+simple_logger = { version = "2.1.0", default-features = false }
+structopt = "0.3"
 
 [dev-dependencies]
 rand = "0.7"

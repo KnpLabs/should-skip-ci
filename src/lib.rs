@@ -1,3 +1,7 @@
+mod git;
+mod ci;
+mod utils;
+
 use std::path::PathBuf;
 use git::commits_range::CommitsRange;
 use git::commits_range::resolve_commits_range;

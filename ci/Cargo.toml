@@ -1,8 +1,0 @@
-[package]
-name = "ci"
-version = "0.2.1"
-authors = ["KNP Labs"]
-edition = "2018"
-
-[dependencies]
-log = "0.4"

@@ -1,10 +1,10 @@
-version: 2
+version: 2.1
 
 reference:
   vm_machine: &vm_machine
     working_directory: ~/my-project
     machine:
-      image: circleci/classic:201808-01
+      image: ubuntu-2004:202201-02
 
   checkout_step: &checkout_step
     checkout:

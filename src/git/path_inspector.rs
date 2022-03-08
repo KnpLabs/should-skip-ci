@@ -4,8 +4,8 @@ use std::path::PathBuf;
 use std::process::Command;
 use log::{debug, info};
 
-use utils::assert_or_panic;
-use crate::commits_range::CommitsRange;
+use crate::utils::assert_or_panic;
+use super::commits_range::CommitsRange;
 
 pub fn has_changes_in_paths(
     working_directory: &PathBuf,

@@ -1,9 +1,0 @@
-[package]
-name = "git"
-version = "0.2.1"
-authors = ["KNP Labs"]
-edition = "2018"
-
-[dependencies]
-utils = { path = "../utils" }
-log = "0.4"

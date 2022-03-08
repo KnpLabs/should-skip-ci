@@ -1,7 +1,2 @@
 .cargo/
-ci/Cargo.lock
-cli/Cargo.lock
-git/Cargo.lock
-logger/Cargo.lock
-utils/Cargo.lock
 target/

@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use std::process::Command;
 use log::debug;
 
-use utils::assert_or_panic;
+use crate::utils::assert_or_panic;
 
 pub fn get_current_branch(
     working_directory: &PathBuf,

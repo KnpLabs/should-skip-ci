@@ -1,7 +1,7 @@
 use std::path::PathBuf;
-use crate::branch::get_current_branch;
-use crate::branch::get_current_remote;
-use crate::branch::get_merge_base_commit;
+use super::branch::get_current_branch;
+use super::branch::get_current_remote;
+use super::branch::get_merge_base_commit;
 
 pub struct CommitsRange {
     from: String,

@@ -1,10 +1,11 @@
-mod lib;
+mod cli;
+mod logger;
 
 use std::env::current_dir;
 use std::process::exit;
 
 use cli::Cli;
-use lib::should_skip_ci;
+use ssc::should_skip_ci;
 use logger::configure_logger;
 
 fn main() {

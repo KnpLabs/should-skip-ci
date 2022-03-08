@@ -5,5 +5,5 @@ authors = ["KNP Labs"]
 edition = "2018"
 
 [dependencies]
-log = "0.4.8"
-simple_logger = { version = "1.6.0", default-features = false }
+log = "0.4"
+simple_logger = { version = "2.1.0", default-features = false }

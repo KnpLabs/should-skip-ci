@@ -11,7 +11,7 @@ printerr() {
 
 get_assets_url() {
     url="$(curl -s \
-        -u "knpEdgar:${GH_ACCESS_TOKEN}" \
+        -u "knpEdgarSsc:${GH_ACCESS_TOKEN}" \
         "https://api.github.com/repos/KnpLabs/should-skip-ci/releases/tags/${GIT_TAG}" \
     | jq -r .assets_url)"
 
@@ -22,7 +22,7 @@ upload_bin() {
     local assets_url="${1}"
 
     curl -s \
-        -u "knpEdgar:${GH_ACCESS_TOKEN}" \
+        -u "knpEdgarSsc:${GH_ACCESS_TOKEN}" \
         -H "Content-Type: application/octet-stream" \
         --data-binary "@${SSC_BIN}" \
         "${assets_url}?name=ssc-x86_64"

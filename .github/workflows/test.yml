@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     steps:
-      - use: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Build docker image
         run: make build
       - name: Run tests

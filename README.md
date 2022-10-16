@@ -80,7 +80,7 @@ OPTIONS:
                                    find the merge base). [default: master]
     --cmd <cmd>                    The command to use to skip the build.
     --path <paths>...              The path to inspect. Defaults to cwd. This arg can be specified multiple times to
-                                   inspect multiple paths.
+                                   inspect multiple paths. A path should point to any git node in the source tree.
     --remote <remote>              The name of the tracked repository. [default: origin]
 ```
 

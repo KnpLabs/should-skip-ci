@@ -91,7 +91,19 @@ on your project.
 
 ## Limitations
 
-This tool can be used in the following scenarii :
+### Platform
+
+Currently, only the GNU/Linux x86_64 platform is supported. However, suggestions
+for other platforms are welcome.
+
+### VCS (Version Control System)
+
+Currently, only [git](https://git-scm.com/) VCS is supported. However,
+suggestions for other VCSs are welcome.
+
+### Use cases
+
+This tool can be used in the following scenari :
 
 - on a pull request. You created a branch from your base branch (identified as
 `origin/master` as default, but this identification is configurable via CLI

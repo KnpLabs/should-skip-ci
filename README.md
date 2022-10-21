@@ -129,5 +129,4 @@ Also, see our [contributing guide](CONTRIBUTING.md).
 
 ## Maintainers 
 [nm2107](https://github.com/nm2107)
-[neghmurken](https://github.com/neghmurken)
 [jaljo](https://github.com/jaljo)

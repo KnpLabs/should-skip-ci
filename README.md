@@ -104,7 +104,7 @@ range of commits.
 should be a merge commit in order to identify all the changes that were brought
 in this merge.
 
-This tool can not be used for the following scenario :
+This tool can not be used for the following scenari :
 
 - on a merge without a merge commit. As the tool scans for the latest commit
 when you're on the base branch, this latest commit should be a merge commit.

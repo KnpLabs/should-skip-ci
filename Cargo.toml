@@ -12,11 +12,11 @@ edition = "2021"
 
 [dependencies]
 log = "0.4"
-simple_logger = { version = "2.1.0", default-features = false }
+simple_logger = { version = "2.3.0", default-features = false }
 structopt = "0.3"
 
 [dev-dependencies]
-rand = "0.7"
+rand = "0.8"
 
 [profile.release]
 # @see https://stackoverflow.com/a/54842093

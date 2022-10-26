@@ -6,7 +6,7 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 #[structopt(name = "ssc", about = "should-skip-ci")]
 struct RawCli {
-    #[structopt(long = "path", help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths.")]
+    #[structopt(long = "path", help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths. A path should point to any git node in the source tree.")]
     paths: Vec<PathBuf>,
 
     #[structopt(long = "remote", default_value = "origin", help = "The name of the tracked repository.")]

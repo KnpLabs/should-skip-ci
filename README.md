@@ -80,7 +80,7 @@ OPTIONS:
                                    find the merge base). [default: master]
     --cmd <cmd>                    The command to use to skip the build.
     --path <paths>...              The path to inspect. Defaults to cwd. This arg can be specified multiple times to
-                                   inspect multiple paths.
+                                   inspect multiple paths. A path should point to any git node in the source tree.
     --remote <remote>              The name of the tracked repository. [default: origin]
 ```
 
@@ -91,7 +91,19 @@ on your project.
 
 ## Limitations
 
-This tool can be used in the following scenaro :
+### Platform
+
+Currently, only the GNU/Linux x86_64 platform is supported. However, suggestions
+for other platforms are welcome.
+
+### VCS (Version Control System)
+
+Currently, only [git](https://git-scm.com/) VCS is supported. However,
+suggestions for other VCSs are welcome.
+
+### Use cases
+
+This tool can be used in the following scenarios :
 
 - on a pull request. You created a branch from your base branch (identified as
 `origin/master` as default, but this identification is configurable via CLI
@@ -104,7 +116,7 @@ range of commits.
 should be a merge commit in order to identify all the changes that were brought
 in this merge.
 
-This tool can not be used for the following scenari :
+This tool can not be used for the following scenario :
 
 - on a merge without a merge commit. As the tool scans for the latest commit
 when you're on the base branch, this latest commit should be a merge commit.

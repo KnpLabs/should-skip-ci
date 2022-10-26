@@ -103,7 +103,7 @@ suggestions for other VCSs are welcome.
 
 ### Use cases
 
-This tool can be used in the following scenari :
+This tool can be used in the following scenarios :
 
 - on a pull request. You created a branch from your base branch (identified as
 `origin/master` as default, but this identification is configurable via CLI
@@ -136,5 +136,9 @@ and then use `cargo` to launch the tool :
 ```bash
 $ cargo run -- <ssc_options>
 ```
-
+## Contribution guide
 Also, see our [contributing guide](CONTRIBUTING.md).
+
+## Maintainers 
+[nm2107](https://github.com/nm2107)
+[jaljo](https://github.com/jaljo)

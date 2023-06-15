@@ -101,6 +101,9 @@ for other platforms are welcome.
 Currently, only [git](https://git-scm.com/) VCS is supported. However,
 suggestions for other VCSs are welcome.
 
+Regarding git, it could be an improvement to use a [git bindings API](https://crates.io/crates/git2)
+instead of running git commands in this tool.
+
 ### Use cases
 
 This tool can be used in the following scenarios :
@@ -139,6 +142,6 @@ $ cargo run -- <ssc_options>
 ## Contribution guide
 Also, see our [contributing guide](CONTRIBUTING.md).
 
-## Maintainers 
+## Maintainers
 [nm2107](https://github.com/nm2107)
 [jaljo](https://github.com/jaljo)

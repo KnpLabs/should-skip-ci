@@ -4,7 +4,7 @@ reference:
   vm_machine: &vm_machine
     working_directory: ~/should-skip-ci
     machine:
-      image: ubuntu-2004:202201-02
+      image: ubuntu-2204:edge
       docker_layer_caching: true
 
   checkout_step: &checkout_step

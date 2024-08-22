@@ -1,26 +1,27 @@
 use std::env::current_dir;
 use std::path::PathBuf;
-use structopt::StructOpt;
+use clap::Parser;
+use clap::ArgAction::Count;
 
 // RawCli represents the CLI args and options as passed on a shell.
-#[derive(StructOpt)]
-#[structopt(name = "ssc", about = "should-skip-ci")]
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
 struct RawCli {
-    #[structopt(long = "path", help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths. A path should point to any git node in the source tree.")]
+    #[arg(long = "path", long_help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths. A path should point to any git node in the source tree.")]
     paths: Vec<PathBuf>,
 
-    #[structopt(long = "remote", default_value = "origin", help = "The name of the tracked repository.")]
+    #[arg(long, default_value = "origin", long_help = "The name of the tracked repository.")]
     remote: String,
 
-    #[structopt(long = "base-branch", default_value = "master", help = "The branch to use as a base to know from where the commit range starts (i.e. to find the merge base).")]
+    #[arg(long = "base-branch", default_value = "master", long_help = "The branch to use as a base to know from where the commit range starts (i.e. to find the merge base).")]
     base_branch: String,
 
-    #[structopt(long = "cmd", help = "The command to use to skip the build.")]
+    #[arg(long, long_help = "The command to use to skip the build.")]
     cmd: String,
 
     // The number of occurrences of the `v/verbose` flag
     /// Verbose mode (-v, -vv, -vvv, etc.)
-    #[structopt(short, long, parse(from_occurrences), help = "Verbosity mode : -v, -vv")]
+    #[arg(short, long, action(Count), long_help = "Verbosity mode : -v, -vv")]
     verbosity: u8,
 }
 
@@ -32,7 +33,7 @@ pub struct Cli {
 
 impl Cli {
     pub fn new() -> Self {
-        let raw_cli: RawCli = RawCli::from_args();
+        let raw_cli: RawCli = RawCli::parse();
         let mut paths: Vec<PathBuf> = Vec::new();
 
         if raw_cli.paths.is_empty() {

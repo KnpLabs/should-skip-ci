@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.2.3 (August 22, 2024)
+
+This is a maintenance release providing the latest (1.80.1) rust environment,
+and projects' dependencies updates ([#38](https://github.com/KnpLabs/should-skip-ci/pull/38)).
+
+The compiled binary size has been slightly reduced due to dependencies
+simplification, thus you are encouraged to update ssc to this version.
+
+
 ## v0.2.2 (November 07, 2022)
 
 This is a fix release with documentation updates. Also, the rust version and

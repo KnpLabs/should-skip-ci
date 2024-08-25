@@ -1,27 +1,57 @@
 use std::env::current_dir;
 use std::path::PathBuf;
 use clap::Parser;
+use clap::builder::NonEmptyStringValueParser;
 use clap::ArgAction::Count;
 
 // RawCli represents the CLI args and options as passed on a shell.
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct RawCli {
-    #[arg(long = "path", long_help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths. A path should point to any git node in the source tree.")]
+    #[arg(
+        long = "path",
+        long_help = "The path to inspect. Defaults to cwd. This arg can be specified multiple times to inspect multiple paths. A path should point to any git node in the source tree.",
+    )]
     paths: Vec<PathBuf>,
 
-    #[arg(long, default_value = "origin", long_help = "The name of the tracked repository.")]
+    #[arg(
+        long,
+        default_value = "origin",
+        long_help = "The name of the tracked repository.",
+    )]
     remote: String,
 
-    #[arg(long = "base-branch", default_value = "master", long_help = "The branch to use as a base to know from where the commit range starts (i.e. to find the merge base).")]
+    #[arg(
+        long = "base-branch",
+        default_value = "master",
+        long_help = "The branch name from where to look for changes. Not usable with `base-ref` arg.",
+    )]
     base_branch: String,
 
-    #[arg(long, long_help = "The command to use to skip the build.")]
+    #[arg(
+        long = "base-ref",
+        alias = "base-tag",
+        conflicts_with = "base_branch",
+        default_value = "",
+        value_parser = NonEmptyStringValueParser::new(),
+        long_help = "The ref (i.e. commit or tag) from where to look for changes. Not usable with `base-branch` arg.",
+    )]
+    base_ref: String,
+
+    #[arg(
+        long,
+        long_help = "The command to use to skip the build.",
+    )]
     cmd: String,
 
     // The number of occurrences of the `v/verbose` flag
     /// Verbose mode (-v, -vv, -vvv, etc.)
-    #[arg(short, long, action(Count), long_help = "Verbosity mode : -v, -vv")]
+    #[arg(
+        short,
+        long,
+        action(Count),
+        long_help = "Verbosity mode : -v, -vv",
+    )]
     verbosity: u8,
 }
 
@@ -58,6 +88,10 @@ impl Cli {
 
     pub fn base_branch(&self) -> &String {
         return &self.raw_cli.base_branch;
+    }
+
+    pub fn base_ref(&self) -> &String {
+        return &self.raw_cli.base_ref;
     }
 
     pub fn cmd(&self) -> &String {

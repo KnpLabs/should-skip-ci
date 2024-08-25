@@ -7,6 +7,7 @@ use std::path::{
 use std::fs::read_to_string;
 use rand;
 use ssc::should_skip_ci;
+use ssc::git::commits_range::CommitsRange;
 use utils::{
     create_remote_repo,
     create_local_repo,
@@ -86,13 +87,19 @@ fn it_should_detect_changes_on_branch() {
     // should-skip-ci
     assert_eq!(false, Path::new(&witness_filepath).exists());
 
+    let commits_range: CommitsRange = CommitsRange::resolve_commits_range(
+        &local_repo_path,
+        &String::from("origin"),
+        &String::from("master"),
+        &String::from(""),
+    );
+
     // should not skip the CI as we made changes on the api app
     should_skip_ci(
         &local_repo_path,
         &vec![api_app_path],
         &cmd,
-        &String::from("origin"),
-        &String::from("master"),
+        &commits_range,
     );
 
     // the stop command should not have been ran
@@ -103,8 +110,7 @@ fn it_should_detect_changes_on_branch() {
         &local_repo_path,
         &vec![front_app_path],
         &cmd,
-        &String::from("origin"),
-        &String::from("master"),
+        &commits_range,
     );
 
     // the stop command should have been ran

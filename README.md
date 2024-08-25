@@ -67,21 +67,43 @@ See the latest version in the [releases panel](https://github.com/KnpLabs/should
 ### Usage
 
 ```
-USAGE:
-    ssc [OPTIONS] --cmd <cmd>
+Usage: ssc [OPTIONS] --cmd <CMD>
 
-FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
-    -v,-vv           Increases verbosity (-v for info, -vv for debug).
+Options:
+      --path <PATHS>
+          The path to inspect. Defaults to cwd.
+          This arg can be specified multiple times to inspect multiple paths.
+          A path should point to any git node in the source tree.
 
-OPTIONS:
-    --base-branch <base-branch>    The branch to use as a base to know from where the commit range starts (i.e. to
-                                   find the merge base). [default: master]
-    --cmd <cmd>                    The command to use to skip the build.
-    --path <paths>...              The path to inspect. Defaults to cwd. This arg can be specified multiple times to
-                                   inspect multiple paths. A path should point to any git node in the source tree.
-    --remote <remote>              The name of the tracked repository. [default: origin]
+      --remote <REMOTE>
+          The name of the tracked repository.
+
+          [default: origin]
+
+      --base-branch <BASE_BRANCH>
+          The branch name from where to look for changes.
+          Not usable with `base-ref` arg.
+
+          [default: master]
+
+      --base-ref <BASE_REF>
+          The ref (i.e. commit or tag) from where to look for changes.
+          Not usable with `base-branch` arg.
+
+          [default: ]
+          [aliases: base-tag]
+
+      --cmd <CMD>
+          The command to use to skip the build.
+
+  -v, --verbosity...
+          Verbosity mode : -v (INFO), -vv (DEBUG)
+
+  -h, --help
+          Print help (see a summary with '-h')
+
+  -V, --version
+          Print version
 ```
 
 ### Examples
@@ -118,6 +140,9 @@ range of commits.
 `origin/master`), the tool only scans the latest commit. This latest commit
 should be a merge commit in order to identify all the changes that were brought
 in this merge.
+- to compare with a tag. In order to see if you have changes in the provided
+paths since this tag (can be a tag or a commit hash, see the `base-ref` CLI
+arg).
 
 This tool can not be used for the following scenario :
 

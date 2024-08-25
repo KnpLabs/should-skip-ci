@@ -30,7 +30,7 @@ struct RawCli {
 
     #[arg(
         long = "base-ref",
-        alias = "base-tag",
+        visible_alias = "base-tag",
         conflicts_with = "base_branch",
         default_value = "",
         value_parser = NonEmptyStringValueParser::new(),
@@ -45,12 +45,11 @@ struct RawCli {
     cmd: String,
 
     // The number of occurrences of the `v/verbose` flag
-    /// Verbose mode (-v, -vv, -vvv, etc.)
     #[arg(
         short,
         long,
         action(Count),
-        long_help = "Verbosity mode : -v, -vv",
+        long_help = "Verbosity mode : -v (INFO), -vv (DEBUG)",
     )]
     verbosity: u8,
 }

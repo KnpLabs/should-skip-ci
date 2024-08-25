@@ -187,6 +187,42 @@ pub fn create_and_push_initial_commit(
     ;
 }
 
+pub fn create_and_push_tag(
+    repo_path: &PathBuf,
+    tag_name: &String,
+) {
+    Command::new("git")
+        .arg("tag")
+        .arg("-a")
+        .arg(&tag_name)
+        .arg("-m")
+        .arg(&format!(
+            "test tag {}",
+            &tag_name,
+        ))
+        .current_dir(&repo_path)
+        .output()
+        .expect(&format!(
+            "Unable to create tag {} for repo {}",
+            &tag_name,
+            &repo_path.to_str().unwrap(),
+        ))
+    ;
+
+    Command::new("git")
+        .arg("push")
+        .arg("origin")
+        .arg(&tag_name)
+        .current_dir(&repo_path)
+        .output()
+        .expect(&format!(
+            "Unable to push tag {} for repo {}",
+            &tag_name,
+            &repo_path.to_str().unwrap(),
+        ))
+    ;
+}
+
 pub fn checkout_new_branch(
     repo_path: &PathBuf,
     branch_name: &String,

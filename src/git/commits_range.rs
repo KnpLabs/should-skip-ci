@@ -9,6 +9,24 @@ pub struct CommitsRange {
 }
 
 impl CommitsRange {
+    pub fn resolve_commits_range(
+        working_directory: &PathBuf,
+        remote: &String,
+        base_branch: &String,
+        base_ref: &String,
+    ) -> Self {
+        let start_ref: String = resolve_start_ref(
+            working_directory,
+            remote,
+            base_branch,
+            base_ref,
+        );
+
+        return CommitsRange {
+            from: start_ref,
+            to: String::from("HEAD"),
+        };
+    }
     pub fn from(&self) -> &String {
         return &self.from;
     }
@@ -18,22 +36,24 @@ impl CommitsRange {
     }
 }
 
-pub fn resolve_commits_range(
+fn resolve_start_ref(
     working_directory: &PathBuf,
     remote: &String,
     base_branch: &String,
-) -> CommitsRange {
-    return CommitsRange{
-        from: resolve_range_start_commit(
-            &working_directory,
-            remote,
-            base_branch,
-        ),
-        to: String::from("HEAD"),
+    base_ref: &String,
+) -> String {
+    if !base_ref.is_empty() {
+        return base_ref.to_string();
     }
+
+    return resolve_base_branch_start_ref(
+        &working_directory,
+        remote,
+        base_branch,
+    );
 }
 
-fn resolve_range_start_commit(
+fn resolve_base_branch_start_ref(
     working_directory: &PathBuf,
     remote: &String,
     base_branch: &String,

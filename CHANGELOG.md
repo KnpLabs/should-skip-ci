@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.3.0 (Month DD, YYYY)
+
+### New features and changes
+
+Be able to compare by tag ([#40](https://github.com/KnpLabs/should-skip-ci/pull/40)).
+A new `--base-ref` CLI arg has been introduced in order to compare a specific
+tag or commit.
+
+Note that this change as introduced changes to the signature of the
+[`should_skip_ci` function](/src/lib.rs).
+
 ## v0.2.3 (August 22, 2024)
 
 This is a maintenance release providing the latest (1.80.1) rust environment,

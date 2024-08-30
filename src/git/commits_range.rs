@@ -2,6 +2,7 @@ use std::path::PathBuf;
 use super::branch::get_current_branch;
 use super::branch::get_current_remote;
 use super::branch::get_merge_base_commit;
+use log::debug;
 
 pub struct CommitsRange {
     from: String,
@@ -42,15 +43,24 @@ fn resolve_start_ref(
     base_branch: &String,
     base_ref: &String,
 ) -> String {
+    let start_ref: String;
+
     if !base_ref.is_empty() {
-        return base_ref.to_string();
+        start_ref = base_ref.to_string();
+        debug!("CommitsRange : Using base ref as start ref ({}).", &start_ref);
+
+        return start_ref;
     }
 
-    return resolve_base_branch_start_ref(
+    start_ref = resolve_base_branch_start_ref(
         &working_directory,
         remote,
         base_branch,
     );
+
+    debug!("CommitsRange : Using base branch as start ref ({}).", &start_ref);
+
+    return start_ref;
 }
 
 fn resolve_base_branch_start_ref(

@@ -1,7 +1,6 @@
 use std::env::current_dir;
 use std::path::PathBuf;
 use clap::Parser;
-use clap::builder::NonEmptyStringValueParser;
 use clap::ArgAction::Count;
 
 // RawCli represents the CLI args and options as passed on a shell.
@@ -33,7 +32,6 @@ struct RawCli {
         visible_alias = "base-tag",
         conflicts_with = "base_branch",
         default_value = "",
-        value_parser = NonEmptyStringValueParser::new(),
         long_help = "The ref (i.e. commit or tag) from where to look for changes. Not usable with `base-branch` arg.",
     )]
     base_ref: String,

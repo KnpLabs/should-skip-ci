@@ -1,15 +1,19 @@
 # Changelog
 
-## v0.3.0 (Month DD, YYYY)
+## v0.3.0 (September 05, 2024)
 
 ### New features and changes
 
-Be able to compare by tag ([#40](https://github.com/KnpLabs/should-skip-ci/pull/40)).
+Be able to compare by tag ([#40](https://github.com/KnpLabs/should-skip-ci/pull/40), [#42](https://github.com/KnpLabs/should-skip-ci/pull/42)).
 A new `--base-ref` CLI arg has been introduced in order to compare a specific
 tag or commit.
 
 Note that this change as introduced changes to the signature of the
 [`should_skip_ci` function](/src/lib.rs).
+
+### Documentation updates
+
+- update CircleCI doc example considering CircleCI deprecations ([#41](https://github.com/KnpLabs/should-skip-ci/pull/41)).
 
 ## v0.2.3 (August 22, 2024)
 

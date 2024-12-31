@@ -15,7 +15,9 @@ shell:
 
 .PHONY: build-release
 build-release:
-	docker-compose run --rm app \
+	docker-compose run --rm \
+		--env LIBGIT2_NO_VENDOR=1 \
+		app \
 		cargo build --release
 
 .PHONY: tests

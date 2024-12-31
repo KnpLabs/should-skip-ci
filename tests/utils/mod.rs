@@ -7,6 +7,15 @@ use std::fs::{
 };
 // import std::io::Write in order to use the writeln! macro on a std::fs::File
 use std::io::Write;
+use git2::Repository;
+
+pub fn open_repository_at_path(path: &PathBuf) -> Repository
+{
+    match Repository::open(&path) {
+        Ok(repo) => return repo,
+        Err(e) => panic!("Failed to open repository {}", e),
+    };
+}
 
 pub fn create_remote_repo(
     base_path: &PathBuf,

@@ -9,6 +9,7 @@ use rand;
 use ssc::should_skip_ci;
 use ssc::git::commits_range::CommitsRange;
 use utils::{
+    open_repository_at_path,
     create_remote_repo,
     create_local_repo,
     set_remote_repo,
@@ -134,8 +135,9 @@ fn it_should_detect_changes_on_master_when_merging_develop_on_master_and_having_
     // should-skip-ci
     assert_eq!(false, Path::new(&witness_filepath).exists());
 
+    let local_git_repo = open_repository_at_path(&local_repo_path);
     let commits_range: CommitsRange = CommitsRange::resolve_commits_range(
-        &local_repo_path,
+        &local_git_repo,
         &String::from("origin"),
         &develop_branch_name,
         &String::from(""),
@@ -143,7 +145,7 @@ fn it_should_detect_changes_on_master_when_merging_develop_on_master_and_having_
 
     // should not skip the CI as we made changes on the api app
     should_skip_ci(
-        &local_repo_path,
+        &local_git_repo,
         &vec![api_app_path],
         &cmd,
         &commits_range,
@@ -154,7 +156,7 @@ fn it_should_detect_changes_on_master_when_merging_develop_on_master_and_having_
 
     // should skip the CI as we did not make any changes on the front app
     should_skip_ci(
-        &local_repo_path,
+        &local_git_repo,
         &vec![front_app_path],
         &cmd,
         &commits_range,

@@ -1,42 +1,57 @@
 extern crate log;
 
 use std::path::PathBuf;
-use std::process::Command;
-use log::{debug, info};
+use git2::Repository;
+use git2::DiffOptions;
+// use log::{debug, info};
 
-use crate::utils::assert_or_panic;
 use super::commits_range::CommitsRange;
 
 pub fn has_changes_in_paths(
-    working_directory: &PathBuf,
+    repo: &Repository,
     commits_range: &CommitsRange,
-    paths: &Vec<PathBuf>
+    paths: &Vec<PathBuf>,
 ) -> bool {
-    let mut cmd = Command::new("git");
-    cmd
-        .arg("diff")
-        .arg("--stat")
-        .arg(commits_range.from())
-        .arg(commits_range.to())
-        .args(paths)
-        .current_dir(&working_directory)
-    ;
+    let from_tree = match repo.revparse_single(format!("{}", commits_range.from()).as_str()) {
+        Ok(o) => match o.peel_to_tree() {
+            Ok(t) => t,
+            _ => panic!("Tree not found for from commit range ({})", commits_range.from()),
+        },
+        _ => panic!("Tree not found for from commit range ({})", commits_range.from()),
+    };
 
-    debug!("Running `{:?}`", cmd);
+    let to_tree = match repo.revparse_single(format!("{}", commits_range.to()).as_str()) {
+        Ok(o) => match o.peel_to_tree() {
+            Ok(t) => t,
+            _ => panic!("Tree not found for to commit range ({})", commits_range.to()),
+        },
+        _ => panic!("Tree not found for to commit range ({})", commits_range.to()),
+    };
 
-    let result = cmd
-        .output()
-        .expect("Failed to run git log command.")
-    ;
+    let repo_path = &repo.path().parent().unwrap();
+    let mut diff_opts: DiffOptions = DiffOptions::new();
+    for path in paths {
+        match path.strip_prefix(repo_path) {
+            Ok(p) => diff_opts.pathspec(&p),
+            _ => continue,
+        };
+    }
 
-    assert_or_panic(&result, &String::from("git diff"));
+    let diffs = match repo.diff_tree_to_tree(Some(&from_tree), Some(&to_tree), Some(&mut diff_opts)) {
+        Ok(d) => d,
+        Err(_) => return false,
+    };
 
+    let deltas = diffs.deltas();
+    let deltas_count = deltas.len();
+    /*
     info!(
         "Detected diff from {} to {} :\n{}",
         commits_range.from(),
         commits_range.to(),
         String::from_utf8(result.stdout.to_vec()).unwrap()
     );
+    */
 
-    return !result.stdout.is_empty();
+    return deltas_count > 0;
 }

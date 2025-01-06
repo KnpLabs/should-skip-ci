@@ -123,8 +123,9 @@ for other platforms are welcome.
 Currently, only [git](https://git-scm.com/) VCS is supported. However,
 suggestions for other VCSs are welcome.
 
-Regarding git, it could be an improvement to use a [git bindings API](https://crates.io/crates/git2)
-instead of running git commands in this tool.
+Using the [git bindings](https://crates.io/crates/git2) API does not seem to
+[improve the tool](https://github.com/KnpLabs/should-skip-ci/pull/44), so we can
+rely on git commands execution.
 
 ### Use cases
 

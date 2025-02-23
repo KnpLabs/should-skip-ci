@@ -8,7 +8,7 @@ documentation = "https://github.com/KnpLabs/should-skip-ci"
 authors = ["KNP Labs"]
 readme = "README.md"
 license = "MIT"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }

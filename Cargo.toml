@@ -16,7 +16,7 @@ log = "0.4"
 simple_logger = { version = "5.0", default-features = false }
 
 [dev-dependencies]
-rand = "0.8"
+rand = "0.9"
 
 [profile.release]
 # @see https://stackoverflow.com/a/54842093

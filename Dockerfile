@@ -1,4 +1,4 @@
-FROM rust:1.85.0-bookworm
+FROM rust:1.90.0-trixie
 
 WORKDIR /app
 
